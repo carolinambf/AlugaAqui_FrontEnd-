@@ -4,12 +4,15 @@ import {
   fetchMovieVideos,
   fetchCasts,
   fetchSimilarMovie,
-} from "../../service";
+} from "../../service/moviedb";
 import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
 import { Modal, Button } from "react-bootstrap";
 import ReactPlayer from "react-player";
 import ReactStars from "react-rating-stars-component";
 import { Link } from "react-router-dom";
+import { rent } from "../../service/aluguer";
+import { price } from "../../service/filmes";
+import { useHistory } from "react-router-dom";
 
 export function MovieDetail({ match }) {
   let params = match.params;
@@ -19,10 +22,22 @@ export function MovieDetail({ match }) {
   const [video, setVideo] = useState([]);
   const [casts, setCasts] = useState([]);
   const [similarMovie, setSimilarMovie] = useState([]);
+  const history = useHistory();
+  
+  const rentMovie = function(id, title) {
+    rent({
+      movie_id: id,
+      movie_name: title,
+    }).then(aluguer => {
+      history.push('/dashboard');
+    })
+  };
 
   useEffect(() => {
     const fetchAPI = async () => {
-      setDetail(await fetchMovieDetail(params.id));
+      let movie = await fetchMovieDetail(params.id);
+      movie.price = await price(movie.id);
+      setDetail(movie);
       setVideo(await fetchMovieVideos(params.id));
       setCasts(await fetchCasts(params.id));
       setSimilarMovie(await fetchSimilarMovie(params.id));
@@ -169,10 +184,20 @@ export function MovieDetail({ match }) {
             ></ReactStars>
           </div>
           <div className="mt-3">
-          <p style={{ color: "#B22222", fontWeight: "bolder", fontSize: 30 }}>PREÇO DE ALUGUER</p> 
-          <p><Button style={{ backgroundColor: "#B22222", border: "none" }}> ALUGAR  </Button> POR 9.99€ </p>
+            <p style={{ color: "#B22222", fontWeight: "bolder", fontSize: 30 }}>PREÇO DE ALUGUER</p> 
+            <div>
+              { localStorage.getItem("token") ? <>
+                <Button className="mr-2" onClick={() => rentMovie(detail.id, detail.title)} style={{ backgroundColor: "#B22222", border: "none" }}>
+                  ALUGAR
+                </Button>
+                <span className="mr-2">POR</span>
+              </> : (
+                <p className="text-muted">Crie uma conta para alugar este filme</p>
+              ) }
+              <span className="h4">{detail.price}€</span>
+            </div>
       
-            <p style={{ color: "#B22222", fontWeight: "bolder", fontSize: 30 }}>RESUMO</p>
+            <p className="mt-4" style={{ color: "#B22222", fontWeight: "bolder", fontSize: 30 }}>RESUMO</p>
             {detail.overview}
           </div>
         </div>

@@ -5,12 +5,11 @@ import {
   fetchMovieByGenre,
   fetchPersons,
   fetchTopratedMovie,
-} from "../../service";
+} from "../../service/moviedb";
 import RBCarousel from "react-bootstrap-carousel";
 import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
-
 
 export function Home() {
   const [nowPlaying, setNowPlaying] = useState([]);
@@ -27,7 +26,7 @@ export function Home() {
       setPersons(await fetchPersons());
       setTopRated(await fetchTopratedMovie());
     };
-
+     
     fetchAPI();
   }, []);
 
