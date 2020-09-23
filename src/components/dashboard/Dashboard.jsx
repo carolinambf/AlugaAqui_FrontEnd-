@@ -2,8 +2,8 @@ import React from 'react';
 import { all, devolver } from '../../service/aluguer';
 import { Link } from 'react-router-dom';
 
-export default class Dashboard extends React.Component {
-
+export default class Dashboard extends React.Component {              // página de Filmes Alugados
+ 
   constructor(props) {
     super(props);
 
@@ -36,7 +36,7 @@ export default class Dashboard extends React.Component {
     });
   }
 
-  render() {
+  render() {                                          // tabela
     return (
       <div className="container pt-4">
         <h1>Filmes Alugados</h1>
@@ -55,11 +55,11 @@ export default class Dashboard extends React.Component {
               <tr key={ aluguer._id }>
                 <td><Link to={"/movie/" + aluguer.movie_id}>{ aluguer.movie_name }</Link></td>
                 <td>{ new Date(aluguer.date_added).toLocaleString() }</td>
-                <td>{ aluguer.date_returned === null ? "Não entregue" : new Date(aluguer.date_returned).toLocaleString() }</td>
-                <td>{ aluguer.price } €</td>
+                <td>{ aluguer.date_returned === null ? "Não entregue" : new Date(aluguer.date_returned).toLocaleString() }</td>  {/* caso o filme não seja entregue apresenta a mensagem de não entregue  */}
+                <td>{ aluguer.price } €</td> {/* apresentação do preço */}
                 <td>
                   { aluguer.date_returned === null ? (
-                    <button onClick={() => this.devolverFilme(aluguer._id)} className="btn btn-sm btn-outline-danger">Devolver</button>
+                    <button onClick={() => this.devolverFilme(aluguer._id)} className="btn btn-sm btn-outline-danger">Devolver</button>  // caso o filme seja entregue apresenta a mensagem de entregue 
                   ) : "Entregue" }
                 </td>
               </tr>

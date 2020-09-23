@@ -9,6 +9,7 @@ const genreUrl = `${url}/genre/movie/list`;
 const moviesUrl = `${url}/discover/movie`;
 const personUrl = `${url}/trending/person/week`;
 
+// base de dados externa 
 export const fetchMovies = async () => {
     try {
         const { data } = await axios.get(nowPlayingUrl, {

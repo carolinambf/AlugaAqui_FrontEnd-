@@ -11,7 +11,7 @@ import "react-bootstrap-carousel/dist/react-bootstrap-carousel.css";
 import { Link } from "react-router-dom";
 import ReactStars from "react-rating-stars-component";
 
-export function Home() {
+export function Home() {                                             // página inicial
   const [nowPlaying, setNowPlaying] = useState([]);
   const [genres, setGenres] = useState([]);
   const [movieByGenre, setMovieByGenre] = useState([]);
@@ -19,7 +19,7 @@ export function Home() {
   const [topRated, setTopRated] = useState([]);
 
   useEffect(() => {
-    const fetchAPI = async () => {
+    const fetchAPI = async () => {                                  // API externa
       setNowPlaying(await fetchMovies());
       setGenres(await fetchGenre());
       setMovieByGenre(await fetchMovieByGenre(28));
@@ -30,10 +30,10 @@ export function Home() {
     fetchAPI();
   }, []);
 
-  const handleGenreClick = async (genre_id) => {
+  const handleGenreClick = async (genre_id) => {                    // género dos filmes
     setMovieByGenre(await fetchMovieByGenre(genre_id));
   };
-  const movies = nowPlaying.slice(0, 5).map((item, index) => {
+  const movies = nowPlaying.slice(0, 5).map((item, index) => {      // filmes na tela a passar automaticamente
     return (
       <div style={{ height: 400, width: "100%" }} key={index}>
         <div className="carousel-center">
@@ -43,7 +43,7 @@ export function Home() {
           
         </div>
         <div
-          className="carousel-caption"
+          className="carousel-caption"                                // nome dos filmes que passam automaticamente na tela
           style={{ textAlign: "center", fontSize: 70, textShadow:  "2px 2px FireBrick" , textDecoration: "overline" }}
         >
           {item.title}
@@ -52,7 +52,7 @@ export function Home() {
     );
   });
    
-  const genreList = genres.map((item, index) => { 
+  const genreList = genres.map((item, index) => {                     // lista de géneros 
     return (
       
      <li className="list-inline-item" key={index} >
@@ -81,7 +81,8 @@ export function Home() {
         </div>
         <div className="mt-3">
           <p style={{ fontWeight: "bolder" }}>{item.title}</p>
-          <p>Classifição: {item.rating}</p>
+          <p>Classifição: {item.rating}</p>                                        
+          {/* Classificação com estrelas */}
           <ReactStars
             count={item.rating}
             size={20}
@@ -92,7 +93,7 @@ export function Home() {
     );
   });
 
-  const trendingPersons = persons.slice(0, 4).map((p, i) => {
+  const trendingPersons = persons.slice(0, 4).map((p, i) => {                   // atores Destacados da Semana 
     return (
       <div className="col-md-3 text-center" key={i}>
         <img
@@ -106,7 +107,7 @@ export function Home() {
     );
   });
 
-  const topRatedList = topRated.slice(0, 4).map((item, index) => {
+  const topRatedList = topRated.slice(0, 4).map((item, index) => {                    // top Filmes da Semana 
     return (
       <div className="col-md-3" key={index}>
         <div className="card">
@@ -127,7 +128,7 @@ export function Home() {
     );
   });
 
-  return (
+  return (                                                     // layuout da página inicial
     <div className="container">
       <div className="row mt-2">
         <div className="col">

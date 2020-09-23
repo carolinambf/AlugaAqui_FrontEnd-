@@ -2,7 +2,7 @@ import React from 'react';
 import { login } from '../../service/utilizador';
 import { withRouter } from "react-router";
 
-class Login extends React.Component {
+class Login extends React.Component {                             // página de Login
 
   constructor(props) {
     super(props);
@@ -12,23 +12,23 @@ class Login extends React.Component {
     }
   }
 
-  entrar() {
+  entrar() {                                                                    // iniciar sessão com email e password
     login({
       email: this.state.email,
       password: this.state.palavraPasse,
     })
     .then(data => {
       if(data.error) {
-        alert("Erro: " + data.error);
+        alert("Erro: " + data.error);                                          
       } else {
         let token = data.token;
         localStorage.setItem("token", token);
-        window.location = window.location.href.replace("/login", "/dashboard");
+        window.location = window.location.href.replace("/login", "/dashboard");     // nome no dashboard
       }
     });
   }
 
-  render() {
+  render() {                                                   // formulário de inicio de sessão 
     return (
       <div className="container pt-4">
         <h1>Login</h1>

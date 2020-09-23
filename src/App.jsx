@@ -20,7 +20,7 @@ class App extends React.Component {
     }
   }
 
-  componentDidMount() {
+  componentDidMount() {                              // método executado depois de o componente renderizado para o dom, através dele podemos aceder ao dom mais tarde
     let that = this;
     autenticado()
     .then(user => {
@@ -35,7 +35,7 @@ class App extends React.Component {
     })
   }
 
-  sair() {
+  sair() {                                                  // logout 
     let that = this;
     logout()
     .then(res => {
@@ -48,11 +48,13 @@ class App extends React.Component {
     })
   }
 
-  render() {
+  render() { 
     return (
       <main>
       <div className="App">
-      
+
+      {/* Navbar  */}
+
       <ReactBootStrap.Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
         <ReactBootStrap.Navbar.Brand >
           <img alt="" src="./img/alugaaqui-negative.png" width="50" height="50"/>
@@ -88,7 +90,10 @@ class App extends React.Component {
       </div>
       
       
-        <Switch>
+        <Switch>  
+          
+      {/* Rotas  */}
+
           <Route path="/" component={Home} exact />
           <Route path="/movie/:id" component={MovieDetail} />
           <Route path="/dashboard" component={Dashboard} />

@@ -2,7 +2,7 @@ import React from 'react';
 import { registar, login } from '../../service/utilizador';
 import { withRouter } from 'react-router-dom';
 
-class Register extends React.Component {
+class Register extends React.Component {                                    // página de Criar Conta
 
   constructor(props) {
     super(props);
@@ -15,8 +15,8 @@ class Register extends React.Component {
     }
   }
 
-  criarConta() {
-    registar({
+  criarConta() {             
+    registar({                                                                 // resgistar com: nome, email, nif e password
       name: this.state.nome,
       email: this.state.email,
       nif: this.state.nif,
@@ -33,13 +33,13 @@ class Register extends React.Component {
         } else {
           let token = data.token;
           localStorage.setItem("token", token);
-          window.location = window.location.href.replace("/register", "/dashboard");
+          window.location = window.location.href.replace("/register", "/dashboard");    //inicia sessão 
         }
       });
     });
   }
 
-  render() {
+  render() {                                                             // formulário de criação de conta
     return (
       <div className="container pt-4">
         <h1>Criar uma Conta</h1>

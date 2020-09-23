@@ -14,7 +14,7 @@ import { rent } from "../../service/aluguer";
 import { price } from "../../service/filmes";
 import { useHistory } from "react-router-dom";
 
-export function MovieDetail({ match }) {
+export function MovieDetail({ match }) {                                  // página Detalhes do Filme
   let params = match.params;
   let genres = [];
   const [isOpen, setIsOpen] = useState(false);
@@ -34,7 +34,7 @@ export function MovieDetail({ match }) {
   };
 
   useEffect(() => {
-    const fetchAPI = async () => {
+    const fetchAPI = async () => {                                       // API externa
       let movie = await fetchMovieDetail(params.id);
       movie.price = await price(movie.id);
       setDetail(movie);
@@ -48,8 +48,8 @@ export function MovieDetail({ match }) {
 
   genres = detail.genres;
 
-  const MoviePalyerModal = (props) => {
-    const youtubeUrl = "https://www.youtube.com/watch?v=";
+  const MoviePalyerModal = (props) => { 
+    const youtubeUrl = "https://www.youtube.com/watch?v=";                   // ligação ao trailer do filme na aplicação Youtube
     return (
       <Modal
         {...props}
@@ -57,7 +57,8 @@ export function MovieDetail({ match }) {
         aria-labelledby="contained-modal-title-vcenter"
         centered
       >
-        <Modal.Header closeButton>
+        {/* botão de feiche */}
+        <Modal.Header closeButton>                                           
           <Modal.Title
             id="contained-modal-title-vcenter"
             style={{ color: "#B22222", fontWeight: "bolder" }}
@@ -77,7 +78,7 @@ export function MovieDetail({ match }) {
     );
   };
 
-  let genresList;
+  let genresList;                                                            // genero do filme escolhido
   if (genres) {
     genresList = genres.map((g, i) => {
       return (
@@ -90,7 +91,7 @@ export function MovieDetail({ match }) {
     });
   }
 
-  const castList = casts.slice(0, 4).map((c, i) => {
+  const castList = casts.slice(0, 4).map((c, i) => {                           // imagem e nome do filme escolhido 
     return (
       <div className="col-md-3 text-center" key={i}>
         <img
@@ -109,7 +110,7 @@ export function MovieDetail({ match }) {
     );
   });
 
-  const similarMovieList = similarMovie.slice(0, 4).map((item, index) => {
+  const similarMovieList = similarMovie.slice(0, 4).map((item, index) => {                  // filmes semelhantes
     return (
       <div className="col-md-3 col-sm-6" key={index}>
         <div className="card">
@@ -130,7 +131,7 @@ export function MovieDetail({ match }) {
     );
   });
 
-  return (
+  return (                                                                 // layout da pagina dos detalhes do filme
     <div className="container">
       <div className="row mt-2">
         <MoviePalyerModal
@@ -142,7 +143,7 @@ export function MovieDetail({ match }) {
         <div className="col text-center" style={{ width: "100%" }}>
           <img
             className="img-fluid"
-            src={`http://image.tmdb.org/t/p/original/${detail.backdrop_path}`}
+            src={`http://image.tmdb.org/t/p/original/${detail.backdrop_path}`}    
             alt={detail.title}
           ></img>
           <div className="carousel-center">
